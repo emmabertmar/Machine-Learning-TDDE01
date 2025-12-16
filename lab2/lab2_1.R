@@ -37,8 +37,8 @@ print(paste("test MSE = ", MSE_test))
 
 # ---------------- Task 3: Lasso regression ---------------- 
 # Prepare training data, remove unnecessary columns
-x = as.matrix(train_df %>% select(-Fat))
-y = as.matrix(train_df %>% select(Fat))
+x = as.matrix(train_df %>% select(-Fat)) #features
+y = as.matrix(train_df %>% select(Fat)) #target
 
 # Fit a Lasso regression model with alpha = 1
 model_lasso = glmnet(x, y, alpha = 1, family = 'gaussian')

@@ -1,13 +1,9 @@
 install.packages('readxl')
-install.packages('kknn')
 install.packages('tree')
 
 library(readxl)
-library(kknn)
 library(tree)
 
-#Each row in dataset is the image of a handwritten digit, each column represents the pixel intensity values and
-#And the last column shows the actual digit 0-9.
 
 #### Exxercise 1####
 data = read.csv2("/home/arre/Universitet/TDDE01/Lab2/bank-full.csv", header = TRUE, stringsAsFactors = TRUE)
@@ -109,10 +105,10 @@ recall = confusion_matrix[2,2]/(confusion_matrix[2,2] + confusion_matrix[2,1]) #
 F1 = 2* (precision*recall)/(precision+recall) #F1 = 0,224554 quite low => bad at detecting the positive class
 
 
-  #####Exercise 5 ####### to be finished
-#Loss matrix needs to be swapped from the one given in assigment correct order no, yes
+  #####Exercise 5 #######
+#Loss matrix needs to be swapped from the one given in assignment correct order no, yes
 LossMatrix = matrix(c(0, 1, 5, 0), nrow = 2, ncol = 2, byrow = TRUE)
-colnames(LossMatrix) = rownames(LossMatrix) = levels(test$output)
+colnames(LossMatrix) = rownames(LossMatrix) = levels(test$output) #make it easier to read
 
 # multiply with loss matrix to weigh the results as we need to
 testPrediction = predict(optimal_tree, newdata = test) %*% LossMatrix
@@ -153,6 +149,7 @@ for (i in seq(0.05, 0.95, 0.05)) {
   #Decision tree
   #y_hat yes if p(Y='yes'|X)>pi otherwise no
   y_hat = ifelse(optimal_dt_predict[,2] > i, "yes", "no")
+  
   #Confusion matrix for decision tree
   cm_DT = table(
     factor(test$output, levels = c("no", "yes")),
